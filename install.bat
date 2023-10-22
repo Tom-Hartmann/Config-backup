@@ -48,7 +48,7 @@ del python_installer.exe
 
 REM 3. Install necessary Python libraries
 echo Installing Python libraries...
-python -m pip install --upgrade pip
+python -m pip install --upgrade pip --user --force
 pip install watchdog configparser
 
 REM 4. Install PM2
