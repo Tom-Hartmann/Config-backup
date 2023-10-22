@@ -14,10 +14,10 @@ Backup Monitor is a Python script that watches specified directories for changes
 ## Installation:
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/Tom-Hartmann/Config-backup
    ```
-````
 
 2. **Run the `install.bat` file:**
    Before running, ensure you have administrative privileges. This script will:
@@ -54,7 +54,4 @@ pm2 list
 ## Support:
 
 For issues or additional assistance, please [raise an issue](https://github.com/Tom-Hartmann/Config-backup/issues).
-
-```
-
-```
+````
