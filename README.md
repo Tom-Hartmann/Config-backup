@@ -35,7 +35,7 @@ Backup Monitor is a Python script that watches specified directories for changes
 
    You will be prompted to confirm the installations. Type "yes" to proceed.
 
-3. **Modify the `config.ini` file (optional):**
+3. **Modify the `config.ini` file:**
    Adjust the settings in the `config.ini` file to suit your needs. Here you can set:
    - Paths to monitor
    - File extensions to watch
