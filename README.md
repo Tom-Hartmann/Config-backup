@@ -1,4 +1,3 @@
-````markdown
 # Backup Monitor
 
 Backup Monitor is a Python script that watches specified directories for changes to text files. Whenever a tracked file is modified, the script creates a backup of that file. Users can specify multiple paths, extensions, the number of backup versions to retain, and a backup directory through a `config.ini` file.
@@ -54,4 +53,3 @@ pm2 list
 ## Support:
 
 For issues or additional assistance, please [raise an issue](https://github.com/Tom-Hartmann/Config-backup/issues).
-````
