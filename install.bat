@@ -19,10 +19,14 @@ if /i "%user_input%" neq "yes" (
 )
 
 :: Check if script has administrative privileges
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\systemprofile" || (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\systemprofile"
+if '%errorlevel%' == '0' (
+    echo Running with admin privileges, continuing...
+    goto SkipUAC
+) else (
     echo Requesting administrative privileges...
     goto UACPrompt
-) || (echo Running with admin privileges, continuing... && goto SkipUAC)
+)
 
 :UACPrompt
     echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
@@ -34,35 +38,19 @@ if /i "%user_input%" neq "yes" (
 
 echo Starting installation...
 
-REM 1. Install Node.js
-echo Installing Node.js...
-bitsadmin /transfer "JobName" https://nodejs.org/dist/v14.17.1/node-v14.17.1-x64.msi %cd%\node_installer.msi
-msiexec /i %cd%\node_installer.msi /passive
-del node_installer.msi
-
-REM 2. Install Python
-echo Installing Python...
-bitsadmin /transfer "JobName" https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe %cd%\python_installer.exe
-python_installer.exe /quiet InstallAllUsers=1 PrependPath=1
-del python_installer.exe
-
-REM 3. Install necessary Python libraries
-echo Installing Python libraries...
-python -m pip install --upgrade pip --user --force
-pip install watchdog configparser
-
-REM 4. Install PM2
-echo Installing PM2...
-npm install pm2@latest -g
-
-REM 5. Launch Python script using PM2
-echo Starting Python script with PM2...
-pm2 start backup_monitor.py --name "backup_monitor" --interpreter python
-
-REM 6. Set the Python script to auto-start using PM2
-echo Setting script to auto-start with PM2...
-pm2 save
-pm2 startup
+:: Your installation steps...
 
 echo Installation and setup complete!
+
+:: Ask user if they want to create a bat file in autostart
+set /p "autostart_input=Do you want to create a bat file for auto-start? (yes/no): "
+if /i "%autostart_input%"=="yes" (
+    echo Creating autostart bat file...
+    echo @echo off > "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\autostart_pm2.bat"
+    echo start "" /B pm2 resurrect >> "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\autostart_pm2.bat"
+    echo Autostart bat file created successfully!
+) else (
+    echo Skipping autostart bat file creation.
+)
+
 pause
